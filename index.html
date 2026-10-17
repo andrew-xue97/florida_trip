@@ -60,8 +60,20 @@
       <p class="eyebrow">Road trip crew</p>
       <h1>Florida <span>Trip</span></h1>
       <p class="tagline">Sun. Sand. Good company.</p>
-      <p class="hint">Details coming soon</p>
+      <form id="unlock-form" class="unlock" autocomplete="off">
+        <label for="passcode" class="sr">Crew passcode</label>
+        <input id="passcode" type="password" placeholder="Crew passcode" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+        <button type="submit">Unlock</button>
+      </form>
+      <p id="unlock-msg" class="msg" role="status"></p>
     </header>
+
+    <section id="private-panel" class="panel" hidden aria-label="Trip details">
+      <div class="panel-inner">
+        <button id="private-close" class="panel-close" type="button">Close</button>
+        <div id="private-body"></div>
+      </div>
+    </section>
 
     <div class="sea" aria-hidden="true">
       <svg class="wave wave-1" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 60c100 40 200-40 300 0s200 40 300 0 200-40 300 0 200 40 300 0v60H0z"/></svg>
@@ -69,5 +81,7 @@
       <svg class="wave wave-3" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 60c100 40 200-40 300 0s200 40 300 0 200-40 300 0 200 40 300 0v60H0z"/></svg>
     </div>
   </main>
+  <script src="content.enc.js"></script>
+  <script src="unlock.js"></script>
 </body>
 </html>

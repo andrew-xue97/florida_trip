@@ -121,6 +121,64 @@ h1 span {
   -webkit-backdrop-filter: blur(6px);
 }
 
+/* Unlock form */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.unlock {
+  display: inline-flex;
+  gap: .5rem;
+  margin-top: 1.6rem;
+  max-width: 100%;
+}
+.unlock input {
+  width: min(62vw, 15rem);
+  padding: .6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .35);
+  background: rgba(255, 255, 255, .16);
+  color: #fff;
+  font-size: 16px; /* 16px stops iOS Safari zooming on focus */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.unlock input::placeholder { color: rgba(255, 255, 255, .75); }
+.unlock button {
+  padding: .6rem 1.1rem;
+  border-radius: 999px;
+  border: 0;
+  background: #fff;
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.unlock.busy button { opacity: .6; pointer-events: none; }
+.msg { min-height: 1.4em; margin-top: .6rem; font-size: .9rem; }
+
+/* Decrypted content */
+.panel {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: rgba(29, 42, 68, .96);
+  padding: calc(env(safe-area-inset-top) + 1rem) 1.25rem calc(env(safe-area-inset-bottom) + 2rem);
+}
+.panel[hidden] { display: none; }
+.panel-inner { max-width: 42rem; margin: 0 auto; }
+.panel-close {
+  float: right;
+  padding: .45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .4);
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+}
+#private-body { clear: both; padding-top: 1rem; line-height: 1.55; }
+#private-body h2 { margin: 1.2rem 0 .4rem; }
+body.panel-open { overflow: hidden; }
+
 /* Sea */
 .sea {
   position: absolute;
