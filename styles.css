@@ -154,30 +154,90 @@ h1 span {
 .unlock.busy button { opacity: .6; pointer-events: none; }
 .msg { min-height: 1.4em; margin-top: .6rem; font-size: .9rem; }
 
-/* Decrypted content */
-.panel {
-  position: fixed;
-  inset: 0;
-  z-index: 10;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  background: rgba(29, 42, 68, .96);
-  padding: calc(env(safe-area-inset-top) + 1rem) 1.25rem calc(env(safe-area-inset-bottom) + 2rem);
+/* Unlocked trip page (replaces the landing scene) */
+body.unlocked { background: #f6f1e7; color: var(--navy); }
+body.unlocked .scene { display: none; }
+.trip[hidden] { display: none; }
+.trip { min-height: 100vh; min-height: 100dvh; }
+.trip-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(env(safe-area-inset-top) + .75rem) 1.25rem .75rem;
+  background: linear-gradient(90deg, #3b2f6b, #c2457a 55%, var(--coral));
+  color: #fff;
 }
-.panel[hidden] { display: none; }
-.panel-inner { max-width: 42rem; margin: 0 auto; }
-.panel-close {
-  float: right;
-  padding: .45rem 1rem;
+.trip-title { font-size: 1.15rem; letter-spacing: .02em; }
+.lock-btn {
+  padding: .4rem 1rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, .4);
+  border: 1px solid rgba(255, 255, 255, .6);
   background: transparent;
   color: #fff;
   font-size: 1rem;
 }
-#private-body { clear: both; padding-top: 1rem; line-height: 1.55; }
-#private-body h2 { margin: 1.2rem 0 .4rem; }
-body.panel-open { overflow: hidden; }
+.trip-body {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.25rem calc(env(safe-area-inset-bottom) + 3rem);
+  line-height: 1.55;
+}
+.trip-body h2 { margin: 1.6rem 0 .5rem; color: #c2457a; }
+.trip-body ul { padding-left: 1.2rem; }
+.trip-body section {
+  background: #fff;
+  border-radius: 14px;
+  padding: .25rem 1.1rem 1rem;
+  margin-top: 1rem;
+  box-shadow: 0 2px 10px rgba(29, 42, 68, .08);
+}
+
+/* Flight cards (boarding-pass look) */
+.flights { display: grid; gap: 1rem; margin-top: 1rem; }
+.trip-body .flight {
+  position: relative;
+  display: grid;
+  grid-template-columns: 5.2rem 1fr;
+  padding: 0;
+  overflow: hidden;
+  background: #fff;
+}
+.flight-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem .5rem;
+  background: linear-gradient(160deg, #3b2f6b, #c2457a 60%, var(--coral));
+  color: #fff;
+  text-align: center;
+}
+.flight-date .mon { font-size: .8rem; letter-spacing: .15em; text-transform: uppercase; opacity: .9; }
+.flight-date .day { font-size: 2rem; font-weight: 800; line-height: 1.1; }
+.flight-main { padding: .9rem 1rem 1rem; border-left: 2px dashed rgba(29, 42, 68, .25); }
+.flight-head { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; }
+.flight-label { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; opacity: .65; }
+.flight-no { font-size: 1.2rem; font-weight: 800; }
+.flight-route {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin: .7rem 0 .3rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.flight-route .plane { color: var(--coral); font-size: 1.1rem; flex: none; }
+.flight-route .line { flex: 1; border-top: 2px dotted rgba(29, 42, 68, .3); }
+.flight-meta { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem 1rem; margin-top: .6rem; font-size: .9rem; }
+.flight-meta dt { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; opacity: .6; }
+.flight-meta dd { margin: 0; font-weight: 600; }
+.flight-cities { display: flex; justify-content: space-between; font-size: .8rem; opacity: .65; }
+.flight-meta small { display: block; font-weight: 500; font-size: .75rem; opacity: .65; }
+.flight-note { margin-top: .9rem; font-size: .8rem; opacity: .7; }
+.tbd { opacity: .45; font-weight: 500; font-style: italic; }
 
 /* Sea */
 .sea {

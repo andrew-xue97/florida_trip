@@ -61,8 +61,9 @@ if (!pass) {
     process.exit(1);
   }
 }
-if (pass.length < 16) {
-  console.warn(`Warning: passcode is only ${pass.length} characters. The encrypted file will be public, so use a long passphrase.`);
+// Any length is accepted. Only very short passcodes get a (non-blocking) heads-up.
+if (pass.length < 8) {
+  console.warn(`Note: passcode is only ${pass.length} characters. The encrypted file is public, so very short passcodes are easy to guess offline.`);
 }
 
 const salt = crypto.getRandomValues(new Uint8Array(16));

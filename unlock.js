@@ -29,10 +29,25 @@
   var form = document.getElementById('unlock-form');
   var input = document.getElementById('passcode');
   var msg = document.getElementById('unlock-msg');
-  var panel = document.getElementById('private-panel');
-  var body = document.getElementById('private-body');
-  var close = document.getElementById('private-close');
+  var page = document.getElementById('trip-page');
+  var body = document.getElementById('trip-body');
+  var lockBtn = document.getElementById('lock-btn');
   if (!form) return;
+
+  // Decrypted content lives only in memory and in the DOM; a reload or Lock clears it.
+  function show(html) {
+    body.innerHTML = html;
+    page.hidden = false;
+    document.body.classList.add('unlocked');
+    window.scrollTo(0, 0);
+  }
+
+  function lock() {
+    body.innerHTML = '';
+    page.hidden = true;
+    document.body.classList.remove('unlocked');
+    window.scrollTo(0, 0);
+  }
 
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -44,10 +59,9 @@
     form.classList.add('busy');
     try {
       var html = await decrypt(input.value, window.FLORIDA_ENC);
-      body.innerHTML = html;
-      panel.hidden = false;
-      document.body.classList.add('panel-open');
       input.value = '';
+      show(html);
+      history.pushState({ unlocked: true }, '', '#trip');
     } catch (err) {
       msg.textContent = 'Wrong passcode.';
     } finally {
@@ -55,9 +69,14 @@
     }
   });
 
-  close.addEventListener('click', function () {
-    panel.hidden = true;
-    body.innerHTML = '';
-    document.body.classList.remove('panel-open');
+  lockBtn.addEventListener('click', function () {
+    if (history.state && history.state.unlocked) history.back();
+    else lock();
   });
+
+  // Back button (or Lock) returns to the landing page and clears the content.
+  window.addEventListener('popstate', lock);
+
+  // A direct visit to /#trip has nothing decrypted yet, so start on the landing page.
+  if (location.hash === '#trip') history.replaceState(null, '', location.pathname);
 })();

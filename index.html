@@ -68,19 +68,20 @@
       <p id="unlock-msg" class="msg" role="status"></p>
     </header>
 
-    <section id="private-panel" class="panel" hidden aria-label="Trip details">
-      <div class="panel-inner">
-        <button id="private-close" class="panel-close" type="button">Close</button>
-        <div id="private-body"></div>
-      </div>
-    </section>
-
     <div class="sea" aria-hidden="true">
       <svg class="wave wave-1" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 60c100 40 200-40 300 0s200 40 300 0 200-40 300 0 200 40 300 0v60H0z"/></svg>
       <svg class="wave wave-2" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 60c100 40 200-40 300 0s200 40 300 0 200-40 300 0 200 40 300 0v60H0z"/></svg>
       <svg class="wave wave-3" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 60c100 40 200-40 300 0s200 40 300 0 200-40 300 0 200 40 300 0v60H0z"/></svg>
     </div>
   </main>
+
+  <div id="trip-page" class="trip" hidden>
+    <header class="trip-bar">
+      <strong class="trip-title">Florida Trip</strong>
+      <button id="lock-btn" class="lock-btn" type="button">Lock</button>
+    </header>
+    <main id="trip-body" class="trip-body"></main>
+  </div>
   <script src="content.enc.js"></script>
   <script src="unlock.js"></script>
 </body>
