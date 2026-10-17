@@ -3,3 +3,6 @@ GIT_PERSONAL_SETUP.md
 
 # macOS
 .DS_Store
+
+# Plaintext private content (only the encrypted output is published)
+private/

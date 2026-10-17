@@ -1,0 +1,145 @@
+:root {
+  --navy: #1d2a44;
+  --coral: #ff7a59;
+  --sun: #ffd166;
+  --teal: #19b5a5;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", Roboto, sans-serif;
+  background: var(--navy);
+  color: #fff;
+  -webkit-text-size-adjust: 100%;
+}
+
+.scene {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Sunset sky */
+.sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #3b2f6b 0%, #c2457a 35%, var(--coral) 62%, var(--sun) 82%);
+  background-size: 100% 140%;
+  animation: skyShift 18s ease-in-out infinite alternate;
+}
+@keyframes skyShift { to { background-position: 0 100%; } }
+
+/* Twinkling stars near the top */
+.stars {
+  position: absolute;
+  inset: 0 0 55% 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 20%, #fff, transparent),
+    radial-gradient(1px 1px at 28% 55%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 44% 12%, #fff, transparent),
+    radial-gradient(1px 1px at 63% 40%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 78% 18%, #fff, transparent),
+    radial-gradient(1px 1px at 90% 50%, #fff, transparent);
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+@keyframes twinkle { from { opacity: .35; } to { opacity: .95; } }
+
+/* Sun */
+.sun {
+  position: absolute;
+  width: min(80vw, 520px);
+  left: 50%;
+  bottom: 12%;
+  transform: translateX(-50%);
+  animation: sunBob 9s ease-in-out infinite alternate;
+}
+@keyframes sunBob { to { transform: translateX(-50%) translateY(-14px) scale(1.04); } }
+
+/* Clouds */
+.cloud { position: absolute; width: 120px; }
+.cloud-a { top: 14%; left: -140px; animation: drift 38s linear infinite; }
+.cloud-b { top: 26%; left: -140px; width: 90px; animation: drift 52s linear -20s infinite; }
+@keyframes drift { to { transform: translateX(calc(100vw + 280px)); } }
+
+/* Palms */
+.palm {
+  position: absolute;
+  bottom: 0;
+  height: min(58vh, 480px);
+  width: auto;
+  transform-origin: 50% 100%;
+  animation: sway 6s ease-in-out infinite alternate;
+}
+.palm-left  { left: -4%; }
+.palm-right { right: -4%; height: min(46vh, 380px); animation-delay: -3s; }
+@keyframes sway { from { transform: rotate(-1.6deg); } to { transform: rotate(1.6deg); } }
+
+/* Text */
+.hero {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 1.25rem;
+  margin-top: -14vh;
+}
+.eyebrow {
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  font-size: .78rem;
+  opacity: .85;
+}
+h1 {
+  font-size: clamp(3rem, 15vw, 7rem);
+  line-height: 1;
+  font-weight: 800;
+  margin: .4rem 0 .6rem;
+  text-shadow: 0 4px 30px rgba(29, 42, 68, .45);
+}
+h1 span {
+  background: linear-gradient(90deg, var(--sun), #fff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.tagline { font-size: clamp(1rem, 4.2vw, 1.5rem); opacity: .95; }
+.hint {
+  display: inline-block;
+  margin-top: 1.6rem;
+  padding: .55rem 1.1rem;
+  border-radius: 999px;
+  font-size: .9rem;
+  background: rgba(255, 255, 255, .16);
+  border: 1px solid rgba(255, 255, 255, .3);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Sea */
+.sea {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 22vh;
+  z-index: 3;
+  pointer-events: none;
+}
+.wave { position: absolute; bottom: 0; left: 0; width: 200%; height: 100%; }
+.wave-1 { fill: rgba(25, 181, 165, .55); animation: roll 14s linear infinite; }
+.wave-2 { fill: rgba(18, 140, 150, .75); height: 82%; animation: roll 10s linear infinite reverse; }
+.wave-3 { fill: var(--navy); height: 60%; animation: roll 7s linear infinite; }
+@keyframes roll { to { transform: translateX(-50%); } }
+
+@media (min-width: 768px) {
+  .palm-left  { left: 6%; }
+  .palm-right { right: 6%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; }
+}
