@@ -35,8 +35,31 @@
   if (!form) return;
 
   // Decrypted content lives only in memory and in the DOM; a reload or Lock clears it.
+  var SEL_KEY = 'trip.sel';
+  function loadSel() {
+    try { return JSON.parse(localStorage.getItem(SEL_KEY)) || {}; } catch (e) { return {}; }
+  }
+  function saveSel(sel) {
+    try { localStorage.setItem(SEL_KEY, JSON.stringify(sel)); } catch (e) { /* storage unavailable */ }
+  }
+  // Ticked options are remembered on this device only, by an opaque key.
+  function restoreSel() {
+    var sel = loadSel();
+    body.querySelectorAll('input[type=checkbox][data-k]').forEach(function (cb) {
+      cb.checked = !!sel[cb.getAttribute('data-k')];
+    });
+  }
+  body.addEventListener('change', function (e) {
+    var cb = e.target;
+    if (!cb.matches || !cb.matches('input[type=checkbox][data-k]')) return;
+    var sel = loadSel();
+    if (cb.checked) sel[cb.getAttribute('data-k')] = 1; else delete sel[cb.getAttribute('data-k')];
+    saveSel(sel);
+  });
+
   function show(html) {
     body.innerHTML = html;
+    restoreSel();
     page.hidden = false;
     document.body.classList.add('unlocked');
     window.scrollTo(0, 0);

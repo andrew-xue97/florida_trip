@@ -76,7 +76,17 @@ const key = await crypto.subtle.deriveKey(
   false,
   ['encrypt']
 );
-const plaintext = new TextEncoder().encode(readFileSync(src, 'utf8'));
+// Images referenced as src="img:<id>" are inlined from private/img/<id>.jpg so they are
+// encrypted with the rest of the content (nothing image-related is published in the clear).
+const BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+const missing = [];
+let html = readFileSync(src, 'utf8').replace(/src="img:([\w-]+)"/g, (_, id) => {
+  const f = join(root, 'private', 'img', `${id}.jpg`);
+  if (!existsSync(f)) { missing.push(id); return `src="${BLANK}"`; }
+  return `src="data:image/jpeg;base64,${readFileSync(f).toString('base64')}"`;
+});
+if (missing.length) console.warn(`Note: ${missing.length} image(s) not found, using placeholders: ${missing.join(', ')}`);
+const plaintext = new TextEncoder().encode(html);
 const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, plaintext);
 
 const blob = { v: 1, iter: ITERATIONS, salt: b64(salt), iv: b64(iv), ct: b64(new Uint8Array(ct)) };
